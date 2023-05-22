@@ -1,105 +1,173 @@
+const moves = document.getElementById("moves-count");
+const timeValue = document.getElementById("time");
 const startButton = document.getElementById("start");
 const stopButton = document.getElementById("stop");
-const moves = document.getElementById("moves-count");
-const timeValue = document.getElementById("timer");
-const results = document.getElementById("result");
 const gameContainer = document.querySelector(".game-container");
+const result = document.getElementById("result");
 const controls = document.querySelector(".controls-container");
+let cards;
+let interval;
+let firstCard = false;
+let secondCard = false;
 
 //items array
 const  items = [
-    { name: "cake", image: "/images/cake.png" },
-    { name: "candy", image: "/images/candy.png" },
-    { name: "cupcake", image: "/images/cupcake.png" },
-    { name:"donut", image: "/images/donut.png" },
-    { name:"chocolate", image: "/images/hot-chocolate.png" },
-    { name:"icecream", image: "/images/ice-cream.png" },
-    { name:"macaron", image: "/images/macaron.png" },
-    { name:"muffin", image: "/images/muffin.png" },
-    { name:"pie", image: "/images/pie.png" },
-    { name:"popsicle", image: "/images/popsicle.png" },
-    { name:"pudding", image: "/images/pudding.png" },
-    { name:"wafer", image: "/images/wafer.png" },
-
+  { name: "cake", image: "public/images/cake.png" },
+  { name: "candy", image: "public/images/candy.png" },
+  { name: "cupcake", image: "public/images/cupcake.png" },
+  { name:"donut", image: "public/images/donut.png" },
+  { name:"chocolate", image: "public/images/hot-chocolate.png" },
+  { name:"icecream", image: "public/images/ice-cream.png" },
+  { name:"macaron", image: "public/images/macaron.png" },
+  { name:"muffin", image: "public/images/muffin.png" },
+  { name:"pie", image: "public/images/pie.png" },
+  { name:"popsicle", image: "public/images/popsicle.png" },
+  { name:"pudding", image: "public/images/pudding.png" },
+  { name:"wafer", image: "public/images/wafer.png" },
 ];
 
-let cards;
-let timerInterval;
-let firstCards = false;
-let secondCards = false;
+// Initial Time
+let seconds = 60;
+// Initial moves and win count
+let movesCount = 0,
+  winCount = 0;
 
-
-//initial start
-let movesCount = 0;
-let winCount = 0;
-let seconds = 90;
-
-//timer
+// For timer
 const timeGenerator = () => {
-    seconds -= 1; 
-    if (seconds < 0) {
-      clearInterval(timerInterval); 
-      timeValue.innerHTML = "<span>Time's up!</span>";
-      return;
-    }
-  
-    let minutes = Math.floor(seconds / 60); 
-    let remainingSeconds = seconds % 60; 
-    let secondsValue = remainingSeconds < 10 ? `0${remainingSeconds}` : remainingSeconds;
-    let minutesValue = minutes < 10 ? `0${minutes}` : minutes;
-    timeValue.innerHTML = `<span>Time:</span>${minutesValue}:${secondsValue}`;
-  };
-//for movescount
+  seconds -= 1;
+  if (seconds < 0) {
+    clearInterval(interval);
+    timeValue.innerHTML = "<span>Time's up!</span>";
+    handleGameOver();
+    return;
+  }
+  let minutes = Math.floor(seconds / 60);
+  let secondsValue = seconds % 60;
+  let secondsDisplay = secondsValue < 10 ? `0${secondsValue}` : secondsValue;
+  let timeDisplay = `<span>Time:</span>${minutes}:${secondsDisplay}`;
+  timeValue.innerHTML = timeDisplay;
+};
+
+// Calculate moves
 const movesCounter = () => {
-    movesCount += 1;
-    moves.innerHTML = `<span>Moves:</span>${movesCount}`;
-  };
+  movesCount += 1;
+  moves.innerHTML = `<span>Moves:</span>${movesCount}`;
+};
 
-  //randomizer
+// Randomizer
 const generateRandom = (size = 4) => {
-    let tempArray = [...items];
-    let cardsValues = [];
-    size = (size * size) / 2;
-    for (let i = 0; i < size; i++) {
-      const randomIndex = Math.floor(Math.random() * tempArray.length);
-      cardsValues.push(tempArray[randomIndex]);
-      tempArray.splice(randomIndex, 1);
-    }
-    return cardsValues;
-  };
+  let tempArray = [...items];
+  let cardValues = [];
+  size = (size * size) / 2;
+  for (let i = 0; i < size; i++) {
+    const randomIndex = Math.floor(Math.random() * tempArray.length);
+    cardValues.push(tempArray[randomIndex]);
+    tempArray.splice(randomIndex, 1);
+  }
+  return cardValues;
+};
 
-  const shuffleGenerator = (cardsValues, size = 4) => {
-    gameContainer.innerHTML = "";
-    cardsValues = [...cardsValues, ...cardsValues];
-    cardsValues.sort(() => Math.random() - 0.5);
-    for (let i = 0; i < size * size; i++) {}
-  };
+const shuffleGenerator = (cardValues, size = 4) => {
+  gameContainer.innerHTML = "";
+  cardValues = [...cardValues, ...cardValues];
+  cardValues.sort(() => Math.random() - 0.5);
+  for (let i = 0; i < size * size; i++) {
+    gameContainer.innerHTML += `
+     <div class="card-container" data-card-value="${cardValues[i].name}">
+        <div class="before-pic">??</div>
+        <div class="after-pic">
+        <img src="${cardValues[i].image}" class="image"/></div>
+     </div>
+     `;
+  }
+  // Grid
+  gameContainer.style.gridTemplateColumns = `repeat(${size},auto)`;
 
-  const initializer = () => {
-    result.innerText = "";
-    winCount = 0;
-    let cardsValues = generateRandom();
-    console.log(cardsValues);
-    shuffleGenerator(cardsValues);
-  };
-
-startButton.addEventListener("click", () => {
-    movesCount = 0;
-    seconds = 90;
-    controls.classList.add("hide");
-    stopButton.classList.remove("hide");
-    startButton.classList.add("hide");
-        timerInterval = setInterval(timeGenerator, 1000);
-        moves.innerHTML = `<span>Moves:</span> ${movesCount}`;
-        initializer();
+  // Cards logic
+  cards = document.querySelectorAll(".card-container");
+  cards.forEach((card) => {
+    card.addEventListener("click", () => {
+      if (!card.classList.contains("matched")) {
+        card.classList.add("flipped");
+        if (!firstCard) {
+          firstCard = card;
+          firstCardValue = card.getAttribute("data-card-value");
+        } else {
+          movesCounter();
+          secondCard = card;
+          let secondCardValue = card.getAttribute("data-card-value");
+          if (firstCardValue == secondCardValue) {
+            firstCard.classList.add("matched");
+            secondCard.classList.add("matched");
+            firstCard = false;
+            winCount += 1;
+            if (winCount == Math.floor(cardValues.length / 2)) {
+              result.innerHTML = `<h2>Yay! You Won!</h2>
+            <h4>Moves: ${movesCount}</h4>`;
+              stopGame();
+              const welcomeTitle = document.getElementById("welcome-title");
+              welcomeTitle.style.display = "none";
+            }
+          } else {
+            let [tempFirst, tempSecond] = [firstCard, secondCard];
+            firstCard = false;
+            secondCard = false;
+            let delay = setTimeout(() => {
+              tempFirst.classList.remove("flipped");
+              tempSecond.classList.remove("flipped");
+              firstCard = false;
+              secondCard = false;
+            }, 800);
+          }
+        }
+      }
+    });
   });
+};
 
-//Stop game
-stopButton.addEventListener(
-    "click",
-    (stopGame = () => {
-      controls.classList.remove("hide");
-      stopButton.classList.add("hide");
-      startButton.classList.remove("hide");
-    })
-  );
+// Start game
+const startGame = () => {
+  movesCount = 0;
+  seconds = 60;
+  controls.classList.add("hide");
+  stopButton.classList.remove("hide");
+  startButton.classList.add("hide");
+  interval = setInterval(timeGenerator, 1000);
+  moves.innerHTML = `<span>Moves:</span>${movesCount}`;
+  initializer();
+};
+
+startButton.addEventListener("click", startGame);
+
+// Stop game
+const stopGame = () => {
+  controls.classList.remove("hide");
+  stopButton.classList.add("hide");
+  startButton.classList.remove("hide");
+  const welcomeTitle = document.getElementById("welcome-title");
+welcomeTitle.style.display = "block";
+  clearInterval(interval);
+};
+
+stopButton.addEventListener("click", stopGame);
+
+// Initialize
+const initializer = () => {
+  result.innerText = "";
+  winCount = 0;
+  let cardValues = generateRandom();
+  console.log(cardValues);
+  shuffleGenerator(cardValues);
+};
+
+// Game Over
+const handleGameOver = () => {
+  result.innerHTML = "<h2>Game Over</h2><h4>You lost!</h4>";
+  stopGame();
+  const welcomeTitle = document.getElementById("welcome-title");
+  welcomeTitle.style.display = "none";
+};
+
+initializer();
+
+

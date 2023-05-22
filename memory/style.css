@@ -3,6 +3,7 @@
     margin: 0;
     box-sizing: border-box;
     font-family: 'Cute Font', cursive;
+    font-size: 50px;
   }
   
   body {
@@ -18,7 +19,7 @@
     transform: translate(-50%, -50%);
     left: 50%;
     top: 50%;
-    border-radius: 11px;
+    border-radius: 9px;
     box-shadow: 0 9px 28px rgba(86, 66, 0, 0.2);
   }
   
@@ -26,7 +27,56 @@
     position: relative;
     width: 100%;
     display: grid;
-    gap: 5px;
+    gap: 9px;
+  }
+  
+  .stats-container {
+    text-align: right;
+    margin-bottom: 14px;
+  }
+  
+  .stats-container span {
+    font-weight: 600;
+  }
+  
+  .card-container {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    cursor: pointer;
+  }
+  
+  .before-pic,
+  .after-pic {
+    position: absolute;
+    border-radius: 5px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 4px solid #000000;
+    transition: transform 0.7s ease-out;
+    backface-visibility: hidden;
+  }
+  
+  .before-pic {
+    background-color: #966FD6;
+    font-size: 28px;
+    font-weight: 600;
+  }
+  
+  .after-pic {
+    background-color: #ffffff;
+    transform: rotateX(180deg);
+  }
+  
+  .card-container.flipped .before-pic {
+    transform: rotateX(180deg);
+  }
+  
+  .card-container.flipped .after-pic {
+    transform: rotateX(0deg);
   }
   
   .controls-container {
@@ -43,24 +93,38 @@
   
   button {
     border: none;
-    border-radius: 3px;
-    padding: 16px 24px;
+    border-radius: 10px;
+    padding: 10px 15px;
     cursor: pointer;
   }
   
-  .welcome-heading {
-    font-size: 50px; 
-    margin-bottom: 8px; 
+  #stop {
+    font-size: 17px;
+    display: block;
+    margin: 17px auto 0 auto;
+    background-color: #000000;
+    color: #ffffff;
   }
-
+  
   .controls-container button {
-    font-size: 24px;
-    padding: 20px 32px;
-    box-shadow: 0 6px 20px rgba(86, 66, 0, 0.2);
+    font-size: 19px;
+    box-shadow: 0 10px 28px rgba(86, 66, 0, 0.2);
   }
   
   .hide {
     display: none;
   }
   
- 
+  #result {
+    text-align: center;
+  }
+  
+  #result h2 {
+    font-size: 40px;
+  }
+  
+  #result h4 {
+    font-size: 28px;
+    margin: 14px 0 28px 0;
+  }
+  
