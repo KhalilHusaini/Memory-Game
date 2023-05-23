@@ -29,8 +29,9 @@ const  items = [
 // Initial Time
 let seconds = 60;
 // Initial moves and win count
-let movesCount = 0,
-  winCount = 0;
+let movesCount = 0;
+let winCount = 0;
+let size = 4;
 
 // For timer
 const timeGenerator = () => {
@@ -96,12 +97,12 @@ const shuffleGenerator = (cardValues, size = 4) => {
           movesCounter();
           secondCard = card;
           let secondCardValue = card.getAttribute("data-card-value");
-          if (firstCardValue == secondCardValue) {
+          if (firstCardValue === secondCardValue) {
             firstCard.classList.add("matched");
             secondCard.classList.add("matched");
             firstCard = false;
             winCount += 1;
-            if (winCount == Math.floor(cardValues.length / 2)) {
+            if (winCount === Math.floor(cardValues.length / 2)) {
               result.innerHTML = `<h2>Yay! You Won!</h2>
             <h4>Moves: ${movesCount}</h4>`;
               stopGame();
