@@ -49,7 +49,7 @@ const timeGenerator = () => {
   timeValue.innerHTML = timeDisplay;
 };
 
-// Calculate moves
+// Calculate how many moves
 const movesCounter = () => {
   movesCount += 1;
   moves.innerHTML = `<span>Moves:</span>${movesCount}`;
@@ -67,7 +67,7 @@ const generateRandom = (size = 4) => {
   }
   return cardValues;
 };
-
+// shuffling of cards
 const shuffleGenerator = (cardValues, size = 4) => {
   gameContainer.innerHTML = "";
   cardValues = [...cardValues, ...cardValues];
@@ -105,9 +105,9 @@ const shuffleGenerator = (cardValues, size = 4) => {
             if (winCount === Math.floor(cardValues.length / 2)) {
               result.innerHTML = `<h2>Yay! You Won!</h2>
             <h4>Moves: ${movesCount}</h4>`;
-              stopGame();
-              const welcomeTitle = document.getElementById("welcome-title");
-              welcomeTitle.style.display = "none";
+              let delay = setTimeout(() => {stopGame();
+                const welcomeTitle = document.getElementById("welcome-title");
+                welcomeTitle.style.display = "none";},1000);
             }
           } else {
             let [tempFirst, tempSecond] = [firstCard, secondCard];
@@ -126,6 +126,7 @@ const shuffleGenerator = (cardValues, size = 4) => {
   });
 };
 
+
 // Start game
 const startGame = () => {
   movesCount = 0;
@@ -135,7 +136,7 @@ const startGame = () => {
   startButton.classList.add("hide");
   interval = setInterval(timeGenerator, 1000);
   moves.innerHTML = `<span>Moves:</span>${movesCount}`;
-  initializer();
+  initialize();
 };
 
 startButton.addEventListener("click", startGame);
@@ -152,8 +153,8 @@ welcomeTitle.style.display = "block";
 
 stopButton.addEventListener("click", stopGame);
 
-// Initialize
-const initializer = () => {
+// Initial state
+const initialize = () => {
   result.innerText = "";
   winCount = 0;
   let cardValues = generateRandom();
@@ -169,6 +170,9 @@ const handleGameOver = () => {
   welcomeTitle.style.display = "none";
 };
 
-initializer();
+initialize();
+
+
+
 
 
