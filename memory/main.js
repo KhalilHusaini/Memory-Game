@@ -5,6 +5,10 @@ const stopButton = document.getElementById("stop");
 const gameContainer = document.querySelector(".game-container");
 const result = document.getElementById("result");
 const controls = document.querySelector(".controls-container");
+const easyButton = document.getElementById("easy");
+const mediumButton = document.getElementById("medium");
+const hardButton = document.getElementById("hard");
+
 let cards;
 let interval;
 let firstCard = false;
@@ -28,10 +32,11 @@ const  items = [
 
 // Initial Time
 let seconds = 60;
-// Initial moves and win count
+// Initial moves, win count and difficulty
 let movesCount = 0;
 let winCount = 0;
 let size = 4;
+let difficulty = "easy";
 
 // For timer
 const timeGenerator = () => {
@@ -169,6 +174,18 @@ const handleGameOver = () => {
   const welcomeTitle = document.getElementById("welcome-title");
   welcomeTitle.style.display = "none";
 };
+
+// Set the difficulty level and grid size
+function setDifficulty(difficultyLevel) {
+    difficulty = difficultyLevel;
+    if (difficulty === "easy") {
+      size = 4;
+    } else if (difficulty === "medium") {
+      size = 5;
+    } else if (difficulty === "hard") {
+      size = 6;
+    }
+  }
 
 initialize();
 
