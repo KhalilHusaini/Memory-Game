@@ -1,130 +1,130 @@
 * {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-    font-family: 'Cute Font', cursive;
-    font-size: 50px;
-  }
-  
-  body {
-    background-color: #C3B1E1;
-  }
-  
-  .wrapper {
-    box-sizing: content-box;
-    width: 430px;
-    padding: 40px 48px;
-    background-color: #ffffff;
-    position: absolute;
-    transform: translate(-50%, -50%);
-    left: 50%;
-    top: 50%;
-    border-radius: 9px;
-    box-shadow: 0 9px 28px rgba(86, 66, 0, 0.2);
-  }
-  
-  .game-container {
-    position: relative;
-    width: 100%;
-    display: grid;
-    gap: 9px;
-  }
-  
-  .stats-container {
-    text-align: right;
-    margin-bottom: 14px;
-  }
-  
-  .stats-container span {
-    font-weight: 600;
-  }
-  
-  .card-container {
-    position: relative;
-    width: 100px;
-    height: 100px;
-    cursor: pointer;
-  }
-  
-  .before-pic,
-  .after-pic {
-    position: absolute;
-    border-radius: 5px;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 4px solid #000000;
-    transition: transform 0.7s ease-out;
-    backface-visibility: hidden;
-  }
-  
-  .before-pic {
-    background-color: #966FD6;
-    font-size: 28px;
-    font-weight: 600;
-  }
-  
-  .after-pic {
-    background-color: #ffffff;
-    transform: rotateX(180deg);
-  }
-  
-  .card-container.flipped .before-pic {
-    transform: rotateX(180deg);
-  }
-  
-  .card-container.flipped .after-pic {
-    transform: rotateX(0deg);
-  }
-  
-  .controls-container {
-    position: absolute;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    width: 100%;
-    height: 100%;
-    background-color: #C3B1E1;
-    top: 0;
-  }
-  
-  button {
-    border: none;
-    border-radius: 10px;
-    padding: 10px 15px;
-    cursor: pointer;
-  }
-  
-  #stop {
-    font-size: 17px;
-    display: block;
-    margin: 17px auto 0 auto;
-    background-color: #000000;
-    color: #ffffff;
-  }
-  
-  .controls-container button {
-    font-size: 19px;
-    box-shadow: 0 10px 28px rgba(86, 66, 0, 0.2);
-  }
-  
-  .hide {
-    display: none;
-  }
-  
-  #result {
-    text-align: center;
-  }
-  
-  #result h2 {
-    font-size: 40px;
-  }
-  
-  #result h4 {
-    font-size: 28px;
-    margin: 14px 0 28px 0;
-  }
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: 'Cute Font', cursive;
+  font-size: 50px;
+}
+
+body {
+  background-color: #C3B1E1;
+}
+
+.wrapper {
+  box-sizing: content-box;
+  width: 430px;
+  padding: 40px 48px;
+  background-color: #ffffff;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  top: 50%;
+  border-radius: 9px;
+  box-shadow: 0 9px 28px rgba(86, 66, 0, 0.2);
+}
+
+.game-container {
+  position: relative;
+  width: 100%;
+  display: grid;
+  gap: 9px;
+}
+
+.stats-container {
+  text-align: right;
+  margin-bottom: 14px;
+}
+
+.stats-container span {
+  font-weight: 600;
+}
+
+.card-container {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  cursor: pointer;
+}
+
+.before-pic,
+.after-pic {
+  position: absolute;
+  border-radius: 5px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 4px solid #000000;
+  transition: transform 0.7s ease-out;
+  backface-visibility: hidden;
+}
+
+.before-pic {
+  background-color: #966FD6;
+  font-size: 28px;
+  font-weight: 600;
+}
+
+.after-pic {
+  background-color: #ffffff;
+  transform: rotateX(180deg);
+}
+
+.card-container.flipped .before-pic {
+  transform: rotateX(180deg);
+}
+
+.card-container.flipped .after-pic {
+  transform: rotateX(0deg);
+}
+
+.controls-container {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  background-color: #C3B1E1;
+  z-index: 1;
+}
+
+.controls-container.hide {
+  display: none;
+}
+
+.controls-container .title {
+  margin-bottom: 30px;
+  font-size: 40px;
+}
+
+.controls-container .grid-size {
+  margin-bottom: 10px;
+}
+
+.controls-container .grid-size button {
+  margin-right: 5px;
+}
+
+.controls-container .grid-size button.active {
+  background-color: #966FD6;
+  color: #ffffff;
+}
+
+.controls-container button {
+  padding: 12px 24px;
+  font-size: 24px;
+  background-color: #966FD6;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.controls-container button.hide {
+  display: none;
+}
+
   
