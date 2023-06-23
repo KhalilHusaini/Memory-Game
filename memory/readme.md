@@ -11,6 +11,8 @@ Git & GitHub
 
 ## Wireframe: Included in the wireframe folder
 
+## Screenshots
+
 ## pseudocode
 
 1. Get references to various HTML elements used in the game, such as the moves counter, timer, start/stop buttons, game container, result message, and controls container.
